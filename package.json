@@ -1,0 +1,24 @@
+{
+    "name": "hannoi-auth",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon ./src/index.js "
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/waguilars/hannoi-auth.git"
+    },
+    "author": "Wilson Aguilar, Gabriel Cacuango, Ricardo Romo",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/waguilars/hannoi-auth/issues"
+    },
+    "homepage": "https://github.com/waguilars/hannoi-auth#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "handlebars": "^4.7.7"
+    }
+}
