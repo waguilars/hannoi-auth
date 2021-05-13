@@ -472,8 +472,20 @@ var settings = {
 };
 
 
-var game = new Phaser.Game(900, 600, Phaser.AUTO, 'hanoi-example');
+const gameWrapper = document.querySelector('#hannoi-example')
 
-game.state.add('Game', Game.Hanoi);
+init()
 
-game.state.start('Game', true, false, settings.MinPieces, settings.InitialSpeedSolve);
+function init() {
+
+    if (!gameWrapper) {
+        return
+    }
+
+    var game = new Phaser.Game(900, 600, Phaser.AUTO, 'hanoi-example');
+
+    game.state.add('Game', Game.Hanoi);
+    
+    game.state.start('Game', true, false, settings.MinPieces, settings.InitialSpeedSolve);
+}
+
