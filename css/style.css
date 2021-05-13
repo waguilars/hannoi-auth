@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: 'BitBold';
     src: url('../resources/fonts/BitBold.ttf') format('truetype');
@@ -7,4 +6,8 @@
 #github {
     margin: 5px;
     float: left;
+}
+
+.bg-my-blue {
+    background-color: #00246E;
 }
