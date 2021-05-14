@@ -1,4 +1,11 @@
 
+CREATE TABLE etnia (
+                id_etnia INT AUTO_INCREMENT NOT NULL,
+                name_etnia VARCHAR(25) NOT NULL,
+                PRIMARY KEY (id_etnia)
+);
+
+
 CREATE TABLE Genero (
                 id_gen INT AUTO_INCREMENT NOT NULL,
                 name_gen VARCHAR(25) NOT NULL,
@@ -17,6 +24,7 @@ CREATE TABLE usuario (
                 id_usuario INT AUTO_INCREMENT NOT NULL,
                 email_user VARCHAR(50) NOT NULL,
                 nick_user VARCHAR(25) NOT NULL,
+                id_etnia INT NOT NULL,
                 id_gen INT NOT NULL,
                 id_figura INT NOT NULL,
                 names_user VARCHAR(50) NOT NULL,
@@ -27,12 +35,17 @@ CREATE TABLE usuario (
                 country_user VARCHAR(25) NOT NULL,
                 province_user VARCHAR(35) NOT NULL,
                 sector_user VARCHAR(50) NOT NULL,
-                codpostal_user VARCHAR(8) NOT NULL,
                 phone_user VARCHAR(15) NOT NULL,
                 edad_user INT NOT NULL,
                 PRIMARY KEY (id_usuario, email_user, nick_user)
 );
 
+
+ALTER TABLE usuario ADD CONSTRAINT etnia_usuario_fk
+FOREIGN KEY (id_etnia)
+REFERENCES etnia (id_etnia)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
 
 ALTER TABLE usuario ADD CONSTRAINT genero_usuario_fk
 FOREIGN KEY (id_gen)
