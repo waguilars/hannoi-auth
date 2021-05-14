@@ -1,31 +1,11 @@
-// const express = require('express');
-// const app = express();
-// const router = express.Router();
-// const path = require('path');
-
-// app.use(express.static(path.join(__dirname, '../public')));
-
-// app.use(router);
-
-// router.get('/', (req, res) => {
-//     res.render(__dirname + 'index.html');
-// });
-
-
-// router.get('/', (req, res) => {
-//     res.render(__dirname + 'login.html');
-// });
-
-
-// app.listen(process.env.port || 3000);
-
-
-//Loads the express module
-
-
 const express = require('express');
+const env = require('dotenv');
 const app = express();
-const port = 3000;
+
+
+env.config();
+
+
 
 const handlebars = require('express-handlebars');
 
@@ -54,4 +34,4 @@ app.get('/game', (req, res) => {
 });
 
 
-app.listen(port, () => console.log(`App listening to port ${port}`));
+app.listen(process.env.PORT, () => console.log(`http://localhost:${process.env.PORT}/`));
