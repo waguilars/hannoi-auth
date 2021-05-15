@@ -22,6 +22,7 @@ app.engine('handlebars', handlebars({
 
 
 app.use(require('./server/routes/routes-index'));
+
 // app.get('/', (req, res) => {
 
 //     res.render('main', { layout: 'index' });
