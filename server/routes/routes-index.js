@@ -52,6 +52,8 @@ router.post('/register', async (req = request, res = response)=> {
     // Validar correo unico
     // Validar cedula
     // Validar
+    console.log('registrar')
+    console.log(req.body)
 })
 
 router.get('/game', (req, res) => {

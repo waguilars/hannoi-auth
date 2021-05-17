@@ -516,16 +516,20 @@ var settings = {
   IntervalIncrementSpeedSolve: 50,
 };
 
+
 const gameWrapper = document.querySelector('#hanoi-example');
 
-var game = new Phaser.Game(900, 600, Phaser.AUTO, 'hanoi-example');
+if ( gameWrapper ) {
+  var game = new Phaser.Game(900, 600, Phaser.AUTO, 'hanoi-example');
+  
+  game.state.add('Game', Game.Hanoi);
+  
+  game.state.start(
+    'Game',
+    true,
+    false,
+    settings.MinPieces,
+    settings.InitialSpeedSolve
+  );
+}
 
-game.state.add('Game', Game.Hanoi);
-
-game.state.start(
-  'Game',
-  true,
-  false,
-  settings.MinPieces,
-  settings.InitialSpeedSolve
-);
