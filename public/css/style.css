@@ -3,9 +3,8 @@
     src: url('../resources/fonts/BitBold.ttf') format('truetype');
 }
 
-#github {
-    margin: 5px;
-    float: left;
+#hanoi-example {
+    justify-content: center;
 }
 
 .bg-my-blue {
