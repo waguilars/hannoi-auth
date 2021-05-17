@@ -1,3 +1,4 @@
+const { request, response } = require('express');
 const express = require('express');
 const pool = require('../database')
 
@@ -46,6 +47,12 @@ router.get('/register', async(req, res) => {
     console.log(genero)
     res.render('register', { layout: 'index', genero, figura });
 });
+
+router.post('/register', async (req = request, res = response)=> {
+    // Validar correo unico
+    // Validar cedula
+    // Validar
+})
 
 router.get('/game', (req, res) => {
 
