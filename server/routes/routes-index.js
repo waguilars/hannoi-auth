@@ -10,8 +10,24 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.render('login', { layout: 'index' });
+    res.render('login', { layout: 'index', error: req.flash('error') });
 });
+
+
+router.post('/login', (req, res) => {
+    const {email, password} = req.body
+
+    try {
+        //TODO: Hacer logeo
+
+
+    } catch (error) {
+        req.flash('error', 'Error en el servidor');
+        res.redirect('/login')
+    }
+
+})
+
 
 router.get('/register', async(req, res) => {
     let sql = 'SELECT `id_gen`,`name_gen` FROM `genero`';

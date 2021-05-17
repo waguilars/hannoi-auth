@@ -1,6 +1,8 @@
 const express = require('express');
 const env = require('dotenv');
 const morgan = require('morgan');
+const session = require('express-session');
+const flash = require('connect-flash');
 const handlebars = require('express-handlebars');
 const app = express();
 
@@ -10,6 +12,8 @@ env.config();
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(session({secret: 'super-secret-key'}))
+app.use(flash())
 
 
 app.use(express.static('public'))
