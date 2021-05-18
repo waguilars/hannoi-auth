@@ -12,9 +12,8 @@ app.use(morgan('dev'));
 app.use(session({ secret: 'super-secret-key', resave: true, saveUninitialized: true }))
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(session({ secret: 'super-secret-key', resave: true, saveUninitialized: true}))
 app.use(flash())
-app.use(express.urlencoded({ extended: false }));
+
 
 
 app.use(express.static('public'))
@@ -25,7 +24,7 @@ app.engine('handlebars', handlebars({
     layoutsDir: __dirname + '/views/layouts',
 }));
 
-// Routes 
+// Routes
 app.use((req, res, next) => {
     next();
 });
