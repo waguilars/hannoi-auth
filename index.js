@@ -5,6 +5,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const handlebars = require('express-handlebars');
 const app = express();
+const passport = require('passport');
 
 
 
@@ -13,7 +14,12 @@ app.use(morgan('dev'));
 app.use(session({secret: 'super-secret-key', resave: true, saveUninitialized: true}))
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+<<<<<<< HEAD
+app.use(session({ secret: 'super-secret-key' }))
+=======
+>>>>>>> 4b118d857c226ef9e5f4c283fb4fbb40da652dbb
 app.use(flash())
+app.use(express.urlencoded({ extended: false }));
 
 
 app.use(express.static('public'))
@@ -24,8 +30,22 @@ app.engine('handlebars', handlebars({
     layoutsDir: __dirname + '/views/layouts',
 }));
 
+// Routes 
+app.use((req, res, next) => {
+    next();
+});
+
+app.use(require('./server/routes/routes-index'))
+
 
 app.use(require('./server/routes/routes-index'));
+
+
+// sesion 
+
+require('./server/lib/passport');
+app.use(passport.initialize());
+app.use(passport.session());
 
 // app.get('/', (req, res) => {
     //     res.render('main', { layout: 'index' });
