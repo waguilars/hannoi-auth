@@ -533,3 +533,59 @@ if ( gameWrapper ) {
   );
 }
 
+
+const modal = document.querySelector('#modal')
+const modalCancel = document.querySelector('#modalCancel')
+const modalOk = document.querySelector('#modalOk')
+
+
+const loginForm = document.querySelector('#login-form')
+const loginBtn = document.querySelector('#login-btn')
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Login page
+  if (loginForm) {
+    loginForm.addEventListener('submit', loginSumbit)
+    modalCancel.addEventListener('click', hideModal)
+    modalOk.addEventListener('click', sendGameParams)
+
+  }
+})
+
+
+function loginSumbit(e) {
+  e.preventDefault()
+  modal.hidden = false;
+}
+
+function hideModal () {
+  modal.hidden = true
+}
+
+function sendGameParams () {
+  const disk = [...document.querySelectorAll('.form-check input[type="radio"]')]
+                .find(d => d.checked)
+                .value
+  const figure = document.querySelector('#fig').value
+  const email = document.querySelector('input[type="email"]').value
+  const password = document.querySelector('input[type="password"]').value
+
+  const params = {email, password, disk, figure}
+
+  // TO Request
+  const headers = new Headers().append('Content-Type', 'application/x-www-form-urlencoded')
+  const reqOpt = {
+    method: 'POST',
+    headers
+  }
+
+  const request = new Request('/add', reqOpt)
+  fetch(request)
+
+}
+
+
+function login () {
+  document.querySelector('form').submit()
+}
