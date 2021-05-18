@@ -11,9 +11,13 @@ const passport = require('passport');
 
 env.config();
 app.use(morgan('dev'));
+app.use(session({secret: 'super-secret-key', resave: true, saveUninitialized: true}))
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+<<<<<<< HEAD
 app.use(session({ secret: 'super-secret-key' }))
+=======
+>>>>>>> 4b118d857c226ef9e5f4c283fb4fbb40da652dbb
 app.use(flash())
 app.use(express.urlencoded({ extended: false }));
 
@@ -44,8 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.get('/', (req, res) => {
-
-//     res.render('main', { layout: 'index' });
+    //     res.render('main', { layout: 'index' });
 // });
 // app.get('/login', (req, res) => {
 
