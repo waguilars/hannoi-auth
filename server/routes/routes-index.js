@@ -16,10 +16,7 @@ router.get('/login', (req, res) => {
 
 router.post('/login', (req, res) => {
     const { email, password } = req.body
-<<<<<<< HEAD
     console.log(req.body);
-=======
->>>>>>> 4b118d857c226ef9e5f4c283fb4fbb40da652dbb
 
     try {
         //TODO: Hacer logeo
@@ -128,7 +125,6 @@ const consulta = async() => {
     return { genero, figura, etnia };
 }
 
-<<<<<<< HEAD
 router.post('/register', async(req = request, res = response) => {
     // Validar correo unico
     // Validar cedula
@@ -136,8 +132,6 @@ router.post('/register', async(req = request, res = response) => {
     console.log('registrar')
     console.log(req.body)
 })
-=======
->>>>>>> 4b118d857c226ef9e5f4c283fb4fbb40da652dbb
 
 const validar_cedula = async(cedula) => {
 
@@ -169,37 +163,31 @@ const validar_cedula = async(cedula) => {
             var numero5 = (numero5 * 2);
             if (numero5 > 9) { var numero5 = (numero5 - 9); }
 
-<<<<<<< HEAD
-router.get('/add', (req, res) => {
-    res.render('usuario/add');
-});
+            router.get('/add', (req, res) => {
+                res.render('usuario/add');
+            });
 
 
-router.post('/add', (req, res) => {
+            router.post('/add', (req, res) => {
 
-    const { correo, pass } = req.body;
-    const newIngreso = {
-        correo,
-        pass
-    };
-    res.send('recived');
+                const { correo, pass } = req.body;
+                const newIngreso = {
+                    correo,
+                    pass
+                };
+                res.send('recived');
 
-});
+            });
 
-router.get('/', async(req, res) => {
-    const usuario = await pool.query('SELECT * FROM usuario');
-    console.log(usuario);
-    res.send('lista de usuario');
+            router.get('/', async(req, res) => {
+                const usuario = await pool.query('SELECT * FROM usuario');
+                console.log(usuario);
+                res.send('lista de usuario');
 
-});
+            });
 
-// singup 
+            // singup 
 
-=======
-            var numero7 = cedula.substring(6, 7);
-            var numero7 = (numero7 * 2);
-            if (numero7 > 9) { var numero7 = (numero7 - 9); }
->>>>>>> 4b118d857c226ef9e5f4c283fb4fbb40da652dbb
 
             var numero9 = cedula.substring(8, 9);
             var numero9 = (numero9 * 2);
