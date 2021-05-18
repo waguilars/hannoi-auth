@@ -48,8 +48,8 @@
                     <div class="w-full pr-2 w-full md:w-1/2">
                     <label class="block mb-1" for="pass1">Contraseña</label>
                     <input required class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="password" id="pass1" name="pass1"/>
-                    {{#if err_pass1}}
-                    <label class="block mb-1 " style="color:red;" for="email">{{err_pass1}}</label>
+                    {{#if err_pass}}
+                    <label class="block mb-1 " style="color:red;" for="email">{{err_pass}}</label>
                     {{/if}}
                     </div>
                     <div class="w-full pl-2 w-full md:w-1/2">
@@ -83,6 +83,11 @@
                     <div class="w-full">
                         <label class="block mb-1">Edad:</label>
                         <input required class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"  min=15 type="number" id="year" name="year"/>
+                        </label>
+                    </div>
+                    <div class="w-full">
+                        <label class="block mb-1">Celular:</label>
+                        <input required class="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"  min=10 type="text" id="phone" name="phone"/>
                         </label>
                     </div>
 

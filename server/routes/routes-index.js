@@ -43,59 +43,45 @@ router.post('/register', async(req = request, res = response) => {
     let body = req.body;
     let sql2 = 'SELECT `email_user`,`nick_user` FROM `usuario` WHERE `email_user`="' + body.email + '" OR `nick_user`="' + body.nickname + '"';
     const result2 = await pool.query(sql2);
-    let err_email;
-    let err_nick;
+    let errores = {}
     if (result2.length >= 1) {
         result2.map(row => {
             if (row.email_user == body.email) {
-                err_email = "correo ya registrado";
+                errores.err_email = "correo ya registrado";
             }
             if (row.nick_user == body.nickname) {
-                err_nick = "Nickname ya resgistrado";
+                errores.err_nick = "Nickname ya resgistrado";
             }
-            res.render('register', {
-                layout: 'index',
-                genero: consult.genero,
-                figura: consult.figura,
-                etnia: consult.etnia,
-                err_email,
-                err_nick
-            });
 
         });
     }
     //Valdiar cedula
-    let err_ci;
-    await validar_cedula(body.cedula).then(resp => {
-        if (!resp) {
-            err_ci = "Cedula no valida";
-            res.render('register', {
-                layout: 'index',
-                genero: consult.genero,
-                figura: consult.figura,
-                etnia: consult.etnia,
-                err_ci
-            });
-        }
-    });
+    let flag = validar_cedula(body.cedula);
+    if (!flag) {
+        errores.err_ci = "Cedula no valida";
+    }
+    flag = validar_clave(body.pass1, body.pass2);
+    if (!flag) {
+        errores.err_pass = "Las constraseñas no coinciden";
+    }
 
-
-    // if (!flag_ci) {
-    //     
-    // }
-    // //validar contrasenia
-    // let flag_pass = await (validar_clave(body.pass1))
-    // let err_pass1;
-    // if (!flag_pass) {
-    //     err_pass1 = "La constraseña debe tener minimo ocho caracteres <br> Una letra mayuscula <br> Un numero <br> y un caracter especial";
-    //     res.render('register', {
-    //         layout: 'index',
-    //         genero: consult.genero,
-    //         figura: consult.figura,
-    //         etnia: consult.etnia,
-    //         err_pass1
-    //     });
-    // }
+    if (Object.keys(errores).length === 0) {
+        let insert = 'INSERT INTO `usuario`(`email_user`, `nick_user`, `id_etnia`, `id_gen`, `id_figura`, `names_user`, `last_user`, `ci_user`, `password_user`, `number_user`, `country_user`, `province_user`, `sector_user`, `phone_user`, `edad_user`) VALUES ' +
+            '("' + body.email + '","' + body.nickname + '",' + body.etn + ',' + body.genre + ',' + body.fig + ',"' + body.name + '","' + body.lastname + '","' + body.cedula + '","' + body.pass1 + '",' + body.disk + ',"' + body.country + '","' + body.prov + '","' + body.city + '","' + body.phone + '",' + body.year + ')';
+        let insertar = await pool.query(insert);
+        res.redirect('/login');
+    } else {
+        res.render('register', {
+            layout: 'index',
+            genero: consult.genero,
+            figura: consult.figura,
+            etnia: consult.etnia,
+            err_email: errores.err_email,
+            err_nick: errores.err_nick,
+            err_ci: errores.err_ci,
+            err_pass: errores.err_pass
+        });
+    }
 })
 
 router.get('/game', (req, res) => {
@@ -126,15 +112,8 @@ const consulta = async() => {
     return { genero, figura, etnia };
 }
 
-router.post('/register', async(req = request, res = response) => {
-    // Validar correo unico
-    // Validar cedula
-    // Validar
-    console.log('registrar')
-    console.log(req.body)
-})
 
-const validar_cedula = async(cedula) => {
+const validar_cedula = (cedula) => {
 
     //Preguntamos si la cedula consta de 10 digitos
     if (cedula.length == 10) {
@@ -164,31 +143,9 @@ const validar_cedula = async(cedula) => {
             var numero5 = (numero5 * 2);
             if (numero5 > 9) { var numero5 = (numero5 - 9); }
 
-            router.get('/add', (req, res) => {
-                res.render('usuario/add');
-            });
-
-
-            router.post('/add', (req, res) => {
-
-                const { correo, pass } = req.body;
-                const newIngreso = {
-                    correo,
-                    pass
-                };
-                res.send('recived');
-
-            });
-
-            router.get('/', async(req, res) => {
-                const usuario = await pool.query('SELECT * FROM usuario');
-                console.log(usuario);
-                res.send('lista de usuario');
-
-            });
-
-            // singup 
-
+            var numero7 = cedula.substring(6, 7);
+            var numero7 = (numero7 * 2);
+            if (numero7 > 9) { var numero7 = (numero7 - 9); }
 
             var numero9 = cedula.substring(8, 9);
             var numero9 = (numero9 * 2);
@@ -228,27 +185,9 @@ const validar_cedula = async(cedula) => {
         return false;
     }
 };
-const validar_clave = async(contrasenna) => {
-    if (contrasenna.length >= 8) {
-        var mayuscula = false;
-        var minuscula = false;
-        var numero = false;
-        var caracter_raro = false;
-
-        for (var i = 0; i < contrasenna.length; i++) {
-            if (contrasenna.charCodeAt(i) >= 65 && contrasenna.charCodeAt(i) <= 90) {
-                mayuscula = true;
-            } else if (contrasenna.charCodeAt(i) >= 97 && contrasenna.charCodeAt(i) <= 122) {
-                minuscula = true;
-            } else if (contrasenna.charCodeAt(i) >= 48 && contrasenna.charCodeAt(i) <= 57) {
-                numero = true;
-            } else {
-                caracter_raro = true;
-            }
-        }
-        if (mayuscula == true && minuscula == true && caracter_raro == true && numero == true) {
-            return true;
-        }
+const validar_clave = (pass1, pass2) => {
+    if (pass1 === pass2) {
+        return true;
     }
     return false;
 }
