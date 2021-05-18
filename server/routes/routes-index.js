@@ -16,7 +16,8 @@ router.get('/login', (req, res) => {
 
 
 router.post('/login', (req, res) => {
-    const {email, password} = req.body
+    const { email, password } = req.body
+    console.log(req.body);
 
     try {
         //TODO: Hacer logeo
@@ -48,7 +49,7 @@ router.get('/register', async(req, res) => {
     res.render('register', { layout: 'index', genero, figura });
 });
 
-router.post('/register', async (req = request, res = response)=> {
+router.post('/register', async(req = request, res = response) => {
     // Validar correo unico
     // Validar cedula
     // Validar
@@ -60,6 +61,31 @@ router.get('/game', (req, res) => {
 
     res.render('game', { layout: 'index' });
 });
+
+router.get('/add', (req, res) => {
+    res.render('usuario/add');
+});
+
+
+router.post('/add', (req, res) => {
+
+    const { correo, pass } = req.body;
+    const newIngreso = {
+        correo,
+        pass
+    };
+    res.send('recived');
+
+});
+
+router.get('/', async(req, res) => {
+    const usuario = await pool.query('SELECT * FROM usuario');
+    console.log(usuario);
+    res.send('lista de usuario');
+
+});
+
+// singup 
 
 
 module.exports = router;
