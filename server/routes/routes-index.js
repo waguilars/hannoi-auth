@@ -62,21 +62,38 @@ router.post('/register', async(req = request, res = response) => {
 
         });
     }
-    let flag_ci = (validar_cedula(body.cedula));
+    //Valdiar cedula
     let err_ci;
-    if (!flag_ci) {
-        err_ci = "Cedula no valida";
-        res.render('register', {
-            layout: 'index',
-            genero: consult.genero,
-            figura: consult.figura,
-            etnia: consult.etnia,
-            err_ci
-        });
-    }
+    await validar_cedula(body.cedula).then(resp => {
+        if (!resp) {
+            err_ci = "Cedula no valida";
+            res.render('register', {
+                layout: 'index',
+                genero: consult.genero,
+                figura: consult.figura,
+                etnia: consult.etnia,
+                err_ci
+            });
+        }
+    });
 
 
-    res.redirect('/login')
+    // if (!flag_ci) {
+    //     
+    // }
+    // //validar contrasenia
+    // let flag_pass = await (validar_clave(body.pass1))
+    // let err_pass1;
+    // if (!flag_pass) {
+    //     err_pass1 = "La constraseña debe tener minimo ocho caracteres <br> Una letra mayuscula <br> Un numero <br> y un caracter especial";
+    //     res.render('register', {
+    //         layout: 'index',
+    //         genero: consult.genero,
+    //         figura: consult.figura,
+    //         etnia: consult.etnia,
+    //         err_pass1
+    //     });
+    // }
 })
 
 router.get('/game', (req, res) => {
@@ -108,7 +125,7 @@ const consulta = async() => {
 }
 
 
-const validar_cedula = (cedula) => {
+const validar_cedula = async(cedula) => {
 
     //Preguntamos si la cedula consta de 10 digitos
     if (cedula.length == 10) {
@@ -179,5 +196,30 @@ const validar_cedula = (cedula) => {
         //imprimimos en consola si la cedula tiene mas o menos de 10 digitos
         return false;
     }
+};
+const validar_clave = async(contrasenna) => {
+    if (contrasenna.length >= 8) {
+        var mayuscula = false;
+        var minuscula = false;
+        var numero = false;
+        var caracter_raro = false;
+
+        for (var i = 0; i < contrasenna.length; i++) {
+            if (contrasenna.charCodeAt(i) >= 65 && contrasenna.charCodeAt(i) <= 90) {
+                mayuscula = true;
+            } else if (contrasenna.charCodeAt(i) >= 97 && contrasenna.charCodeAt(i) <= 122) {
+                minuscula = true;
+            } else if (contrasenna.charCodeAt(i) >= 48 && contrasenna.charCodeAt(i) <= 57) {
+                numero = true;
+            } else {
+                caracter_raro = true;
+            }
+        }
+        if (mayuscula == true && minuscula == true && caracter_raro == true && numero == true) {
+            return true;
+        }
+    }
+    return false;
 }
+
 module.exports = router;
