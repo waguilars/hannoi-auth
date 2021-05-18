@@ -356,6 +356,8 @@ Game.Hanoi.prototype = {
       if (pieces[i] != j) return false;
     }
 
+
+    makeLoginRequest()
     return true;
   },
 
@@ -521,14 +523,20 @@ const gameWrapper = document.querySelector('#hanoi-example');
 
 if ( gameWrapper ) {
   var game = new Phaser.Game(900, 600, Phaser.AUTO, 'hanoi-example');
-  
+
+  const userParams = JSON.parse(localStorage.getItem('user-params'))
+  const pieces = +userParams?.disk
+  if (!userParams || ! pieces) {
+    window.location.href = '/login'
+  }
+
   game.state.add('Game', Game.Hanoi);
-  
+
   game.state.start(
     'Game',
     true,
     false,
-    settings.MinPieces,
+    pieces,
     settings.InitialSpeedSolve
   );
 }
@@ -573,18 +581,30 @@ function sendGameParams () {
 
   const params = {email, password, disk, figure}
 
-  // TO Request
-  const headers = new Headers().append('Content-Type', 'application/x-www-form-urlencoded')
-  const reqOpt = {
-    method: 'POST',
-    headers
-  }
 
-  const request = new Request('/add', reqOpt)
-  fetch(request)
+  localStorage.setItem('user-params', JSON.stringify(params))
+
+  window.location.href = '/game'
+
+  // TO Request
+  // fetch('/login', {
+  //   method: 'POST',
+  //   redirect: 'follow',
+  //   body: JSON.stringify(params),
+  //   headers:{
+  //     'Content-Type': 'application/json'
+  //   }
+  // }).then(response => {
+  //   if (response.redirected) {
+  //     window.location.href = response.url;
+  //   }
+  // })
 
 }
 
+function makeLoginRequest () {
+  console.log('make login')
+}
 
 function login () {
   document.querySelector('form').submit()

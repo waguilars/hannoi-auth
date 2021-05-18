@@ -20,7 +20,8 @@ router.post('/login', (req, res) => {
 
     try {
         //TODO: Hacer logeo
-
+        console.log(req.body)
+        throw new Error('sas')
 
     } catch (error) {
         req.flash('error', 'Error en el servidor');
